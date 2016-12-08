@@ -15,3 +15,18 @@ All A-Frame elements inherit from the AFRAME.ANode prototype. ANode controls how
 
 ##Stuff about interaction
 <a-scene> has a default camera, but if we want to add a cursor, we have to explicitly define a camera, so we can make the cursor a child of that camera.
+
+##Day 3
+Today I took a look at the light component. Lights apply to all materials unless we've applied `shader: flat` to them. Lights are pretty tough on performance so its good to keep them to a minimum.
+
+By default, A-Frame provides us with a default ambient and directional light, these are removed whenever we specify a light within the scene.
+
+The light component has three properties type, color and intensity.
+
+The type attribute has four potential values. The default value is directional. A directional light is in a given direction, but infinitely far away, so absolute position does not effect a directional light's intensity. You can use the postion attribute of the directional light to give it a direction but only the angle set by the position actually matters.
+
+A hemisphere light is like an ambient light, but it allows you to pass in a groudColor attribute so you can have distinct colors of light coming from different parts of the scene (for like ground and sky for example).
+
+Point lights are "lightbulb" type lights. They are omnidirectional and the intensity of the light they give off is dependent on their distance from the object they're lighting. You can pass in a distance attibute to set the point where the intensity of the light becomes zerro. You can also set the rate at which the light dims along its distance by setting a decay attribute.
+
+Spot lights are spotlights. Their light is in one direction and varies in intensity based on position. Spotlights can take an angle, a rate of decay, a distance to zero, a penumbra in the form of a percent, and a target. If you want your spotlight to be fixed on one element, you can pass it's id to the target attribute, but if you want to transform your spotlight by varying the Z axis of its position, you should set it to null.
