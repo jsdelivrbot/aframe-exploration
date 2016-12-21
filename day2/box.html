@@ -8,14 +8,17 @@
     		<img id="devicelab-logo" src="devicelab_logo_stacked.png">
     	</a-assets>
     	<a-sky color="#D3D3D3"></a-sky>
-      <a-box color="#D3D3D3" width="4" height="10" depth="2"
+      <a-box width="4" height="10" depth="2"
          position="-10 2 -5" rotation="0 0 45" scale="2 0.5 3"
          src="#devicelab-logo">
 			<!--- Animation begins on click -->
-			<a-animation attribute="rotation" begin="click" repeat"indefinite" to="0 360 0"></a-animation>
+				<a-animation attribute="rotation" begin="click" to="0 360 0"></a-animation>
       </a-box>
+      <!-- Light -->
+      <a-light type="spot" color="#ffff00" position="-20 0 0" look-at="a-box"></a-light>
+      <a-light type="point" color="#AAA" position="0 5 0"></a-light>
       <a-camera position="0 1.8 0">
-      <a-cursor color="#2E3487"></a-cursor>
+      	<a-cursor color="#2E3487"></a-cursor>
     </a-scene>
   </body>
 </html>

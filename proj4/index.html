@@ -1,0 +1,57 @@
+<head>
+  <title>My A-Frame Scene</title>
+  <script src="https://aframe.io/releases/0.3.0/aframe.min.js"></script>
+  <script src="https://rawgit.com/ngokevin/kframe/master/dist/kframe.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/nunjucks/2.3.0/nunjucks.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+</head>
+
+<body>
+  <a-scene>
+    <a-assets>
+      <a-mixin id="leaf-block"
+                 geometry="primitive: box; depth: 2.5; height: 2.5; width: 2.5"
+                 material="color: #69C181; side: double"></a-mixin>
+
+
+      <script id="forest" type="text/x-nunjucks-template">
+        {% for x in range(1, 10) %}
+          {% for z in range(1, 10) %}
+            <a-entity template="src: tree.template; type: handlebars"
+                        data-position="{{ x * 10 }} 0 {{ z * 10 }}"
+                        data-trunkcolor="#623B1C"></a-entity>
+          {% endfor %}
+        {% endfor %}
+      </script>
+
+      <script id="butterflies" type="text/x-nunjucks-template">
+        {% for x in range(0, 10) %}
+          {% for z in range(0, 10) %}
+            <a-entity template="src: butterfly.template; type: handlebars"
+                      data-position="{{ x * 10 }} 1 {{ z * 10 }}"></a-entity>
+          {% endfor %}
+        {% endfor %}
+      </script>
+
+      <script id="clouds" type="text/x-jade-template">
+        - for (var x = 0; x < 5; x++) {
+          - for (var z = 0; z < 5; z++) {
+            a-entity(geometry="primitive: box; depth: 8; height: 1; width: 6", material="opacity: 0.2", position="#{x * 20} 15 #{z * 20}")
+          - }
+        - }
+      </script>
+    </a-assets>
+
+    <a-entity template="src: #forest"></a-entity>
+    <a-entity template="src: #clouds"></a-entity>
+    <a-entity template="src: #butterflies" position="0 2 0"></a-entity>
+
+
+    <a-entity position="25 0 25">
+      <a-camera></a-camera>
+    </a-entity>
+    <a-plane color="#CAAD8C" height="500" width="500" shader="flat"
+              position="0 0 0" rotation="-90 0 0"></a-plane>
+    <a-sky color="#3EC1D3"></a-sky>
+  </a-scene>
+</body>
