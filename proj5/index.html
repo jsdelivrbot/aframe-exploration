@@ -1,15 +1,58 @@
 <head>
 	<title>A-Frame Snowstorm</title>
 	<script src="https://aframe.io/releases/0.4.0/aframe.min.js"></script>
-	<script src="https://rawgit.com/ngokevin/kframe/master/dist/kframe.min.js"></script>
+	<script src="https://rawgit.com/ngokevin/aframe-template-component/master/dist/aframe-template-component.min.js"></script>
+	<script src="https://rawgit.com/donmccurdy/aframe-extras/v2.1.1/dist/aframe-extras.loaders.min.js"></script>
 </head>
 
 <body>
 	<a-scene>
 		<a-assets>
 			<img id="sky-bg" src="snow_Creative_Commons.jpg">
+			<a-asset-item id="big-snowflake" src="snowflake.ply"></a-asset-item>
+
+			<script id="big-snowflakes" type="text/x-nunjucks-template">
+        {% for x in range(0, 5) %}
+          {% for z in range(0, 5) %}
+          	{% for y  in range(0, 5) %}
+            	<a-entity template="src: big-snow.template; type: handlebars"
+                      data-position="{{ x * 10 }} {{ y * 10 }} {{ z * 10 }}"></a-entity>
+            {% endfor %}
+          {% endfor %}
+        {% endfor %}
+      </script>
+
+			<script id="medium-flurry" type="text/x-nunjucks-template">
+        {% for x in range(0, 5) %}
+          {% for z in range(0, 5) %}
+          	{% for y  in range(0, 5) %}
+            	<a-entity template="src: med-snow.template; type: handlebars"
+                      data-position="{{ x * 10 }} {{ y * 10 }} {{ z * 10 }}"></a-entity>
+            {% endfor %}
+          {% endfor %}
+        {% endfor %}
+      </script>
 		</a-assets>
 
+		<a-entity template="src: #medium-flurry" position="0 2 0"></a-entity>
+    <a-entity ply-model="src: #big-snowflake" rotation="-90 0 0" scale="0.1 0.1 0.1">
+      <a-animation attribute="position"
+                  from="25 30 25"
+                  to="0 -10 0"
+                  dur="15000"
+                  easing="ease-in-out-quint"
+                  repeat="indefinite"></a-animation>
+      <a-animation attribute="rotation"
+                  from="-90 0 0"
+                  to="90 0 0"
+                  dur="5000"
+                  repeat="indefinite"></a-animation>
+    </a-entity>
+
+    <!--seriously, don't delete this or everything will look wacky!-->
+		<a-entity position="25 0 25">
+      <a-camera></a-camera>
+    </a-entity>
 
 		<a-sky src="#sky-bg"></a-sky>
 		<a-plane color="#D7E4F3" height="500" width="500" shader="flat"
